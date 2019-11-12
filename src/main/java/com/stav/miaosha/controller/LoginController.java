@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -34,21 +36,20 @@ public class LoginController {
 
     @PostMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(LoginVo loginVo) throws Exception {
+    public Result<Boolean> doLogin(@Valid LoginVo loginVo) throws Exception {
         log.info(loginVo.toString());
-        String passInput = loginVo.getPassword();
-        String mobileInput = loginVo.getMobile();
-        if (StringUtils.isEmpty(passInput)) {
-            return Result.error(CodeMsg.PASSWORD_EMPTY);
-        }
-        if (StringUtils.isEmpty(mobileInput)) {
-            return Result.error(CodeMsg.MOBILE_EMPTY);
-        }
-
-        if (!ValidatorUtil.isMobile(mobileInput)) {
-            return Result.error(CodeMsg.MOBILE_ERROR);
-        }
-
+//        String passInput = loginVo.getPassword();
+//        String mobileInput = loginVo.getMobile();
+//        if (StringUtils.isEmpty(passInput)) {
+//            return Result.error(CodeMsg.PASSWORD_EMPTY);
+//        }
+//        if (StringUtils.isEmpty(mobileInput)) {
+//            return Result.error(CodeMsg.MOBILE_EMPTY);
+//        }
+//
+//        if (!ValidatorUtil.isMobile(mobileInput)) {
+//            return Result.error(CodeMsg.MOBILE_ERROR);
+//        }
         // 登录
         CodeMsg cm = this.miaoshaUserService.loginCheck(loginVo);
         if (cm.getCode() == 0) {
